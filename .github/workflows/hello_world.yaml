@@ -18,10 +18,6 @@ jobs:
     name: Using Node ${{ matrix.node }}
     steps:
       - uses: actions/checkout@v4
-      - name: Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node }}
       - name: Say Hello
         run: echo "Hello Metaroon"
         shell: bash
