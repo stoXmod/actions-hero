@@ -1,12 +1,13 @@
-name: Hello world workflow
+na1me: Hello world workflow
 
 on:
   push:
     branches:
       - main
-    pull_request:
+  pull_request:
+    branches:
       - main
-    workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   say_hello:
