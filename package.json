@@ -1,0 +1,35 @@
+{
+  "name": "actions-hero",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./dist/app.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/app.js",
+    "dev": "npm-run-all --parallel watch-ts watch-server",
+    "watch-server": "nodemon dist/app.js",
+    "kill-ports": "npx kill-port 3001",
+    "watch-ts": "tsc --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stoXmod/actions-hero.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/stoXmod/actions-hero/issues"
+  },
+  "homepage": "https://github.com/stoXmod/actions-hero#readme",
+  "dependencies": {
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.20",
+    "@types/node": "^20.8.10",
+    "nodemon": "^3.0.1",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.2.2"
+  }
+}
