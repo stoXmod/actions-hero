@@ -11,12 +11,12 @@ curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install nodejs
 sudo npm install pm2@latest -g
 
-# Setup sudo to allow no-password sudo for "metaroon" group and adding "terraform" user
+# Setup sudo to allow no-password sudo for "metaroon" group and adding "stoxmod" user
 sudo groupadd -r metaroon
-sudo useradd -m -s /bin/bash terraform
-sudo usermod -a -G metaroon terraform
+sudo useradd -m -s /bin/bash stoxmod
+sudo usermod -a -G metaroon stoxmod
 sudo cp /etc/sudoers /etc/sudoers.orig
-echo "terraform ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/terraform
+echo "stoxmod ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/stoxmod
 
 # Change deployment directory path and permissions
 sudo mkdir -p /var/app
