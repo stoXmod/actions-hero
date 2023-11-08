@@ -43,16 +43,17 @@ jobs:
           remote_user: ${{ secrets.REMOTE_USER }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-#      - uses: JimCronqvist/action-ssh@7737f1192ddd8376686e9d6354dea44592c942bf
-#        name: Execute SSH commmands on remote server
-#        with:
-#          hosts: '${{ secrets.REMOTE_USER }}@${{ secrets.HOSTNAME }}'
-#          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
-#          command: |
-#            cd /var/app/web
-#            npm ci
-#            pm2 start /var/app/web/bin/www || pm2 restart /var/app/web/bin/www
-#            sudo service nginx restart
+      - uses: JimCronqvist/action-ssh@7737f1192ddd8376686e9d6354dea44592c942bf
+        name: Execute SSH commands on remote server
+        with:
+          hosts: '${{ secrets.REMOTE_USER }}@${{ secrets.HOSTNAME }}'
+          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+          command: |
+            cd /var/app/web
+            npm ci
+            npm run build
+            pm2 start /var/app/web/dist/index.js || pm2 restart /var/app/web/dist/index.js
+            sudo service nginx restart
 
   # ======================================================
   # Deploy the main branch to production
@@ -86,13 +87,14 @@ jobs:
           remote_user: ${{ secrets.REMOTE_USER }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-#      - uses: JimCronqvist/action-ssh@7737f1192ddd8376686e9d6354dea44592c942bf
-#        name: Execute SSH commmands on remote server
-#        with:
-#          hosts: '${{ secrets.REMOTE_USER }}@${{ secrets.HOSTNAME }}'
-#          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
-#          command: |
-#            cd /var/app/web
-#            npm ci
-#            pm2 start /var/app/web/bin/www || pm2 restart /var/app/web/bin/www
-#            sudo service nginx restart
+      - uses: JimCronqvist/action-ssh@7737f1192ddd8376686e9d6354dea44592c942bf
+        name: Execute SSH commands on remote server
+        with:
+          hosts: '${{ secrets.REMOTE_USER }}@${{ secrets.HOSTNAME }}'
+          privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+          command: |
+            cd /var/app/web
+            npm ci
+            npm run build
+            pm2 start /var/app/web/dist/index.js || pm2 restart /var/app/web/dist/index.js
+            sudo service nginx restart
