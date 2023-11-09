@@ -1,75 +1,45 @@
-terraform {
-  backend "remote" {
-    organization = "metaroon"
+resource "google_compute_project_metadata" "ssh_keys" {
+  metadata = {
+    "ssh-keys" = "terraform:${var.staging_public_key}"
+  }
+}
 
-    workspaces {
-      name = "staging"
+resource "google_dns_managed_zone" "my_zone" {
+  name     = "my-managed-zone"
+  dns_name = "your-domain.com."
+  description = "Managed DNS zone for my domain"
+}
+
+resource "google_compute_instance" "staging_cicd_demo" {
+  name         = "staging-cicd-demo"
+  machine_type = "f1-micro"
+  zone         = var.gcp_zone
+
+  boot_disk {
+    initialize_params {
+      image = var.base_image
     }
   }
 
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 3.48"
-    }
-
-    random = {
-      source = "hashicorp/random"
-      version = "3.1.0"
+  network_interface {
+    network = "default"
+    access_config {
+      // Ephemeral IP
     }
   }
 
-  required_version = ">= 0.15.0"
-}
-
-provider "aws" {
-  profile = "default"
-  region  = "eu-west-1"
-}
-
-variable "staging_public_key" {
-  description = "Staging environment public key value"
-  type        = string
-}
-
-variable "base_ami_id" {
-  description = "Base AMI ID"
-  type        = string
-}
-
-resource "random_id" "server" {
-  keepers = {
-    # Generate a new id each time we switch to a new AMI id
-    ami_id = "${var.base_ami_id}"
+  metadata = {
+    ssh-keys = "terraform:${var.staging_public_key}"
   }
-
-  byte_length = 8
+  tags = ["staging-cicd-demo"]
 }
 
-resource "aws_key_pair" "staging_key" {
-  key_name   = "staging-key"
-  public_key = var.staging_public_key
-
-  tags = {
-    "Name" = "staging_public_key"
-  }
+resource "google_dns_record_set" "my_instance_dns" {
+  name         = "your-instance-dns-name.your-domain.com."
+  type         = "A"
+  ttl          = 300
+  managed_zone = google_dns_managed_zone.my_zone.name
+  rrdatas = [google_compute_instance.staging_cicd_demo.network_interface[0].access_config[0].nat_ip]
 }
 
-# This is the main staging environment. We will deploy to this the changes
-# to the main branch before deploying to the production environment.
-resource "aws_instance" "staging_cicd_demo" {
-  # Read the AMI id "through" the random_id resource to ensure that
-  # both will change together.
-  ami                    = random_id.server.keepers.ami_id
-  instance_type          = "t2.micro"
-  vpc_security_group_ids = ["sg-0d2411db69a112a30"]
-  key_name               = aws_key_pair.staging_key.key_name
 
-  tags = {
-    "Name" = "staging_cicd_demo-${random_id.server.hex}"
-  }
-}
-
-output "staging_dns" {
-  value = aws_instance.staging_cicd_demo.public_dns
-}
