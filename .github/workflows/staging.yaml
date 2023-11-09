@@ -83,13 +83,6 @@ jobs:
       # as we will need it later to fetch the hostname of the
       # staging server
       # ======================================================
-      - name: 'Create staging environment resource file'
-        id: create_resource_file
-        working-directory: infra/instances/staging/
-        run: |
-          OUTPUT="$(./create_staging_resource.sh PR_${{ github.event.inputs.PR_number }} | jq -r .terraform_expected_output)"
-          echo "::set-output name=STAGING_RESOURCE_NAME::$OUTPUT"
-
       - name: Terraform Init and Validate
         id: init
         working-directory: infra/instances/staging/
