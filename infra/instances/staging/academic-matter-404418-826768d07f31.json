@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "academic-matter-404418",
+  "private_key_id": "826768d07f31214913b430f2f34dfca446da05c6",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQCVvz3S+iKRBFtz\nFAwe80r7BIQCdOUFNkjmbdiMxu8FaQeQDtZrucqZF0aBk5jSLoKT1Z62FZtNCfwZ\nztZL3vRlL3s1xN0kBqHzsaR05BZVNBWDDJO0XibJtyyW70FAuYu7TraRwIPqhufz\nPZcIaeaUf7IHypGoT44P4etXHv9vfOz0SXC6669YPy8muamUHTQEWESgogGSRZz1\nyahpxU/ECftcS94OaVwpTb4BpXu7KBwE5UVQx2Wz/0qfCLlL0YMYaguZoz9jHwJz\n3qgKEQ8vo16vel3bxVFuYoc82tPdd0gpqQS+ChROmQ0Yq2U9tTEOfYMqhXmJUUZn\n6U8UhLABAgMBAAECggEAMsIozCdSaTJ/ZxIQC7uvGkgNESIbcTlV25m3Ufyqj3xq\n/lcxMkG/XUYo9YoYvoHabA74ZcMMKcBtLjhQplYUJGpEStUImooPAmIgGyknMsld\nU1cDiBtz7WMEH8NIrI5YQWzscJo/fNMus2IYnFb9PC/Oolp1JgaVYmfTVGwi7GB4\n2qXsR98w//qyCPesdWH41wCnK0UyxEh4p0GbLTp+KcpU8mz4ZZqUnN6OUF38gown\nTnNR8QZeI1ZfC+BI4caJtyxb2VSIFYNd/VjxqcEy34dwOQ/diqPWkmqhpn76kbjq\nUAyGglWZMk9gqvMsHgielfO0Qvk71V5Ljnsd3cg7IwKBgQDE2xEDXiMpvqOakbYi\nfZYfztgwYewQcghYkxJF3eLveIL9cdUFoJkF0p5M2jxktul6CECFeGo7VLKG2wNY\nJThmPEjoSF7P2oFPXImJV51pnx33PPOwHp2iZJi37no/rJYGb1gEg1h5R6IwuFqA\n8vq5p2YtMoeeTGM8v3mmiunLowKBgQDCvN0leOhu7isrWUhPP27S+M2vfdFUCWPm\n71FXNW3jEmoWQGlFrnJLCjdBjJZ6hqX+RRlp9WOrP6SwPb7JRnUGgbMhKoH5j9kP\nR9xghRhIb7nY0JQHLTdADyONXUVCrejnC7rHcMq+rYIj5W0D7ETnJPaMLPNDJhZ4\ndr4fDTJQCwKBgGASSYtLNf35e/7Dfg/3Gn0LhZaXM44TGN+hZxmR4F7egY8PLtdA\nOW4ODBOVrkO4wNk9jb+VtMKf40DNQiSShaPfZ/V03FC0YsdIchcFG12gug8fQA6D\n4oqObbnWOPM6Vz1suZf6QgNuYklEr2afLp3MhKEqN+WZghTznXsZ8F/hAoGAKCxu\nMtzOlpPrs/WnRTIA2uUZCasbFAsb4Phd/2+2S7Hw0MZY8VcbnP9uhsdKA9zjQaFf\nrMxC04E9qF4UjdFLMxxup9jtF17lmJFqlT7f05G49VGSOCjLzRtSakdjkm3uLjvt\nPFe4e72vq1gZNUX4sPafJivfw2qIGDHm5uECECECgYA5PTMdsk1OhswRG/esSzwT\nHDlusl4yysHT1QhRaTHN+85MxGh3psQd4AWPrPFfx+eRGsFEeBDgDX1H4/S7u8jT\nsbDGURlggQXWwRm4s7pWm85BwW2o21Ge0XA3Q8hd22T8MdbtJvnNR1dUvhp5XJqi\n6gsAlK5qNxD/d0dEspSi9w==\n-----END PRIVATE KEY-----\n",
+  "client_email": "metaroon-terraform@academic-matter-404418.iam.gserviceaccount.com",
+  "client_id": "109876874086527690910",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/metaroon-terraform%40academic-matter-404418.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}
