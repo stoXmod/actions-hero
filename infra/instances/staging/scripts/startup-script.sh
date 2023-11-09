@@ -20,14 +20,14 @@ echo "stoxmod ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/stoxmod
 
 # Change deployment directory path and permissions
 sudo mkdir -p /var/app
-sudo chown -R ubuntu:ubuntu /var/app
+sudo chown -R stoxmod:stoxmod /var/app
 
 # Setup nginx
 # Remove the default configuration
 sudo sh -c '> /etc/nginx/sites-available/default' && \
 sudo sh -c 'sudo cat <<EOF > /etc/nginx/sites-available/default
 upstream app_upstream {
-server 127.0.0.1:3000;
+server 127.0.0.1:5000;
 keepalive 64;
 }
 
@@ -45,7 +45,7 @@ proxy_http_version 1.1;
 proxy_set_header Upgrade \$http_upgrade;
 proxy_set_header Connection "upgrade";
 
-proxy_pass http://app_upstream/;
+proxy_pass http://localhost:5000;
 proxy_redirect off;
 proxy_read_timeout 240s;
 }
