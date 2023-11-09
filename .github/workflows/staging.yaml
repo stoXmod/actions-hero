@@ -9,6 +9,7 @@ on:
 
 jobs:
   create:
+    environment: staging
     name: 'Create staging and deploy'
     defaults:
       run:
