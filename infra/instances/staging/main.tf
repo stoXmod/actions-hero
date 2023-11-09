@@ -42,7 +42,7 @@ resource "google_compute_instance" "staging_pr_demo" {
 }
 
 resource "google_dns_record_set" "my_instance_dns" {
-  name         = "staging-pr-${random_string.random.result}.wisdomdemo.com"
+  name         = "staging-pr-${random_string.random.result}.wisdomdemo.com."
   type         = "A"
   ttl          = 300
   managed_zone = google_dns_managed_zone.my_zone.name

@@ -6,6 +6,4 @@ provider "google" {
 }
 
 # RANDOM PROVIDER
-provider "random" {
-    version = "~> 2.2"
-}
+provider "random" {}
