@@ -139,7 +139,7 @@ jobs:
       - name: Terraform Output
         id: apply_output
         working-directory: infra/instances/staging/
-        run: terraform output -raw -no-color ${{ steps.create_resource_file.outputs.STAGING_RESOURCE_NAME }}
+        run: terraform output -raw -no-color instance_dns_name
 
       # ======================================================
       # Checkout the PR branch so that we can deploy it
