@@ -1,5 +1,5 @@
 gcp_svc_key = "./academic-matter-404418-826768d07f31.json"
-staging_public_key = "ssh-rsa ..........redacted........+q4MTsVqkAXcz6UWWayKIc1PWJVBk8QtvCcQ== ubuntu@staging"
+staging_public_key = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCyhIxC0QmWB8ZK/6iDXRYgSO+o/5WJvIzwKAJm35RETf5mb/KUOminmGpILuRFnhQ1IDMHBzJUrnZMTo9UVdDLv2LaesEIVJtccJ3NTUAv4K3Kd4td94YZYY29GXHM07g9Ev0PZQWZfSPn36GB9/8fMq1XbRjS5DXGS6TeRokIrmYoraOq0FLkCXKjjlJk+UcPaFHz8x4MdlODCsrzfCVZuAR7AhvQasQmvuddypEuvmDKBwJdxtfLvHKiW9QDI/rVLX0hVgS05sg09Yo3nGM7wpgzoH4dJGaz48LnbOxOiqlFJIzxFouhnQpbTJYCthJerUJI8lRHp1n1cx7Bsb/9 stoxmod"
 instance_name = "staging"
 gcp_zone = "us-central1-a"
 base_image= "projects/debian-cloud/global/images/family/debian-10"

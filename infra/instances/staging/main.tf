@@ -5,13 +5,19 @@ resource "google_compute_project_metadata" "ssh_keys" {
 }
 
 resource "google_dns_managed_zone" "my_zone" {
-  name     = "my-managed-zone"
+  name     = "pr-staging-zone"
   dns_name = "wisdomdemo.com."
   description = "Managed DNS zone for my domain"
 }
 
-resource "google_compute_instance" "staging_cicd_demo" {
-  name         = "staging-cicd-demo"
+resource "random_string" "random" {
+  length  = 8
+  special = false
+  upper   = false
+}
+
+resource "google_compute_instance" "staging_pr_demo" {
+  name         = "staging-pr-${random_string.random.result}"
   machine_type = "f1-micro"
   zone         = var.gcp_zone
 
@@ -29,18 +35,18 @@ resource "google_compute_instance" "staging_cicd_demo" {
   }
 
   metadata = {
-    ssh-keys = "terraform:${var.staging_public_key}",
+    ssh-keys = "terraform:${var.staging_public_key}"
     startup-script = file("./scripts/startup-script.sh")
   }
-  tags = ["staging-cicd-demo"]
+  tags = ["staging-pr-demo"]
 }
 
 resource "google_dns_record_set" "my_instance_dns" {
-  name         = "staging-cicd.wisdomdemo.com."
+  name         = "staging-pr-${random_string.random.result}.wisdomdemo.com"
   type         = "A"
   ttl          = 300
   managed_zone = google_dns_managed_zone.my_zone.name
-  rrdatas = [google_compute_instance.staging_cicd_demo.network_interface[0].access_config[0].nat_ip]
+  rrdatas = [google_compute_instance.staging_pr_demo.network_interface[0].access_config[0].nat_ip]
 }
 
 
