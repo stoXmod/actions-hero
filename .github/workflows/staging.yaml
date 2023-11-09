@@ -139,7 +139,7 @@ jobs:
       - name: Terraform Output
         id: apply_output
         working-directory: infra/instances/staging/
-        run: terraform output -raw -no-color instance_dns_name
+        run: terraform output -raw -no-color instance_public_ip
 
       # ======================================================
       # Checkout the PR branch so that we can deploy it
