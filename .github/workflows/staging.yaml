@@ -10,8 +10,6 @@ on:
 defaults:
   run:
     shell: bash
-    # Define the working directory for all run steps in the workflow
-    working-directory: ./web.30
 
 jobs:
   create:
