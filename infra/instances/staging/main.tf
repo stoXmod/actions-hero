@@ -1,6 +1,6 @@
 resource "google_compute_project_metadata" "ssh_keys" {
   metadata = {
-    "ssh-keys" = "terraform:${var.staging_public_key}"
+    "ssh-keys" = "stoxmod:${var.staging_public_key}"
   }
 }
 
@@ -35,7 +35,7 @@ resource "google_compute_instance" "staging_pr_demo" {
   }
 
   metadata = {
-    ssh-keys = "terraform:${var.staging_public_key}"
+    ssh-keys = "stoxmod:${var.staging_public_key}"
     startup-script = file("./scripts/startup-script.sh")
   }
   tags = ["staging-pr-demo"]
