@@ -10,7 +10,7 @@ variable "zone" {
 }
 
 variable "staging_public_key" {
-  description = "Production environment public key value"
+  description = "Staging environment public key value"
   type        = string
 }
 

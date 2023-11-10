@@ -4,3 +4,6 @@ provider "google" {
     project = var.gcp_project
     region=  var.gcp_zone
 }
+
+# RANDOM PROVIDER
+provider "random" {}

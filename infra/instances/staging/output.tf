@@ -1,3 +1,4 @@
-output "instance_dns_name" {
-  value = google_dns_record_set.my_instance_dns.name
+output "instance_public_ip" {
+  value = google_compute_instance.staging_pr_demo.network_interface[0].access_config[0].nat_ip
+  description = "The public IP address of the instance."
 }

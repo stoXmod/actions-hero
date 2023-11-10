@@ -7,13 +7,17 @@ on:
         description: 'Pull request number'
         required: true
 
+defaults:
+  run:
+    shell: bash
+    # Define the working directory for all run steps in the workflow
+    working-directory: ./web.30
+
+
 jobs:
   create:
-    name: 'Create staging and deploy'
-    defaults:
-      run:
-        shell: bash
-
+    environment: staging-pr
+    name: 'Create staging PR deployment'
     runs-on: ubuntu-latest
 
     steps:
@@ -139,38 +143,7 @@ jobs:
       - name: Terraform Output
         id: apply_output
         working-directory: infra/instances/staging/
-        run: terraform output -raw -no-color ${{ steps.create_resource_file.outputs.STAGING_RESOURCE_NAME }}
-
-      # ======================================================
-      # If everything goes well and the Terraform Plan was
-      # executed successfully, and the resources were created
-      # we need to commit the new resource file and push it
-      # to the infra branch.
-      #
-      # If we don't do this, everytime this workflow runs
-      # it will destroy the resources created by previous
-      # runs. We need to persist the state in the repository
-      # for this to work.
-      #
-      # Here we use a neat little trick:
-      # git commit -m "Add terraform resource files" && \
-      #      git push || echo "Nothing to commit"
-      #
-      # git push will fail with a non-zero exit if there
-      # are no changes to commit and this will cause the workflow
-      # to fail. We don't want that. We can use the `|| echo`
-      # to print "Nothing to commit" to the console if
-      # git push fails.
-      # ======================================================
-      - name: Commit terraform resource files to the PR
-        working-directory: infra/instances/staging/
-        run: |
-          git config --global user.name '${{ github.actor }}'
-          git config --global user.email '${{ github.actor}}@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
-          git add ./\*.tf
-          git commit -m "Add terraform resource files" && \
-            git push || echo "Nothing to commit"
+        run: terraform output -raw -no-color instance_public_ip
 
       # ======================================================
       # Checkout the PR branch so that we can deploy it
@@ -179,6 +152,19 @@ jobs:
         name: 'Checkout PR branch'
         with:
           ref: ${{ steps.verify_pr_number.outputs.result }}
+
+      # ======================================================
+      # Install rsync on the remote server
+      # ======================================================
+      - name: Install rsync on Remote Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ steps.apply_output.outputs.stdout }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            sudo apt-get update
+            sudo apt-get install -y rsync
 
       # ======================================================
       # We sync the files in this directory to the staging
@@ -199,7 +185,7 @@ jobs:
       # we need to restart the staging server.
       # ======================================================
       - uses: JimCronqvist/action-ssh@7737f1192ddd8376686e9d6354dea44592c942bf
-        name: Execute SSH commmands on remote server
+        name: Execute SSH commands on remote server
         with:
           hosts: '${{ secrets.REMOTE_USER }}@${{ steps.apply_output.outputs.stdout }}'
           privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
@@ -207,7 +193,7 @@ jobs:
             cd /var/app/web
             npm ci
             npm run build
-            pm2 start /var/app/web/dist/index.js || pm2 restart /var/app/web/dist/index.js
+            pm2 start /var/app/web/dist/server.js || pm2 restart /var/app/web/dist/server.js
             sudo service nginx restart
 
       # ======================================================
