@@ -193,7 +193,7 @@ jobs:
             cd /var/app/web
             npm ci
             npm run build
-            pm2 start /var/app/web/dist/index.js || pm2 restart /var/app/web/dist/index.js
+            pm2 start /var/app/web/dist/server.js || pm2 restart /var/app/web/dist/server.js
             sudo service nginx restart
 
       # ======================================================
