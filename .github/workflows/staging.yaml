@@ -7,14 +7,16 @@ on:
         description: 'Pull request number'
         required: true
 
+defaults:
+  run:
+    shell: bash
+    # Define the working directory for all run steps in the workflow
+    working-directory: ./web.30
+
 jobs:
   create:
     environment: staging-pr
-    name: 'Create staging and deploy'
-    defaults:
-      run:
-        shell: bash
-
+    name: 'Create staging PR deployment'
     runs-on: ubuntu-latest
 
     steps:
