@@ -157,6 +157,9 @@ jobs:
       - uses: burnett01/rsync-deployments@23a557dceb19f9bb960ef40cf75cab5e9b37ec1f
         name: 'Deploy to staging'
         with:
+          run: |
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+            chmod 600 private_key
           switches: -avzr --delete
           path: ./web
           remote_path: /var/app
@@ -173,6 +176,9 @@ jobs:
         with:
           hosts: '${{ secrets.REMOTE_USER }}@${{ steps.apply_output.outputs.stdout }}'
           privateKey: ${{ secrets.SSH_PRIVATE_KEY }}
+          run: |
+            echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
+            chmod 600 private_key
           command: |
             cd /var/app/web
             npm ci
