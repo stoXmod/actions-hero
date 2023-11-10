@@ -37,6 +37,8 @@ resource "google_compute_instance" "staging_pr_demo" {
   metadata = {
     ssh-keys = "stoxmod:${var.staging_public_key}"
     startup-script = file("./scripts/startup-script.sh")
+    allow-http = "true"
+    allow-https = "true"
   }
   tags = ["staging-pr-demo"]
 }
