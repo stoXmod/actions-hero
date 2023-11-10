@@ -153,12 +153,18 @@ jobs:
           ref: ${{ steps.verify_pr_number.outputs.result }}
 
       # ======================================================
+      # Install rsync so that we can sync the files to the
+      # staging server
+      # ======================================================
+      - name: Install rsync
+        run: sudo apt-get update && sudo apt-get install -y rsync
+
+      # ======================================================
       # We sync the files in this directory to the staging
       # server. We use the `rsync` command to do this.
       # ======================================================
       - uses: burnett01/rsync-deployments@23a557dceb19f9bb960ef40cf75cab5e9b37ec1f
         name: 'Deploy to staging'
-        run: sudo apt-get update && sudo apt-get install -y rsync
         with:
           switches: -avzr --delete
           path: ./web
