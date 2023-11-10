@@ -37,10 +37,32 @@ resource "google_compute_instance" "staging_pr_demo" {
   metadata = {
     ssh-keys = "stoxmod:${var.staging_public_key}"
     startup-script = file("./scripts/startup-script.sh")
-    allow-http = "true"
-    allow-https = "true"
   }
   tags = ["staging-pr-demo"]
+}
+
+resource "google_compute_firewall" "allow_http" {
+  name    = "allow-http"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["80"]
+  }
+
+  target_tags = ["staging-pr-demo"]
+}
+
+resource "google_compute_firewall" "allow_https" {
+  name    = "allow-https"
+  network = "default"
+
+  allow {
+    protocol = "tcp"
+    ports    = ["443"]
+  }
+
+  target_tags = ["staging-pr-demo"]
 }
 
 resource "google_dns_record_set" "my_instance_dns" {
