@@ -10,6 +10,9 @@ on:
 defaults:
   run:
     shell: bash
+    # Define the working directory for all run steps in the workflow
+    working-directory: ./web.30
+
 
 jobs:
   create:
@@ -151,11 +154,17 @@ jobs:
           ref: ${{ steps.verify_pr_number.outputs.result }}
 
       # ======================================================
-      # Install rsync so that we can sync the files to the
-      # staging server
+      # Install rsync on the remote server
       # ======================================================
-      - name: Install rsync
-        run: sudo apt-get update && sudo apt-get install -y rsync
+#      - name: Install rsync on Remote Server
+#        uses: appleboy/ssh-action@master
+#        with:
+#          host: ${{ steps.apply_output.outputs.stdout }}
+#          username: ${{ secrets.REMOTE_USER }}
+#          key: ${{ secrets.SSH_PRIVATE_KEY }}
+#          script: |
+#            sudo apt-get update
+#            sudo apt-get install -y rsync
 
       # ======================================================
       # We sync the files in this directory to the staging

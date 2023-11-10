@@ -4,7 +4,7 @@ set -e
 # Install dependencies
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq update
-sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install curl wget git vim apt-transport-https ca-certificates nginx
+sudo DEBIAN_FRONTEND=noninteractive apt-get -y -qq install curl wget git vim apt-transport-https ca-certificates nginx rsync
 
 # Setup NodeJS 16.x
 curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
