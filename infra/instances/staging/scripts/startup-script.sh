@@ -20,7 +20,7 @@ echo "stoxmod ALL=(ALL) NOPASSWD:ALL" | sudo tee /etc/sudoers.d/stoxmod
 
 # Change deployment directory path and permissions
 sudo mkdir -p /var/app
-sudo chown -R ubuntu:ubuntu /var/app
+sudo chown -R stoxmod:stoxmod /var/app
 
 # Setup nginx
 # Remove the default configuration
