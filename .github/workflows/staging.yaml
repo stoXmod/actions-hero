@@ -143,7 +143,8 @@ jobs:
         run: |
           output=$(terraform output -json dns_details)
           echo "Terraform output: $output"
-          echo "::set-output name=dns_details::$(echo "$output" | jq -r '.')"
+          public_ip=$(echo "$output" | jq -r '.public_ip')
+          echo "::set-output name=public_ip::$public_ip"
 
       # ======================================================
       # Checkout the PR branch so that we can deploy it
