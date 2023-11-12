@@ -160,7 +160,7 @@ jobs:
           switches: -avzr --delete
           path: ./web
           remote_path: /var/app
-          remote_host: ${{ steps.apply_output.outputs.stdout.public_ip  }}
+          remote_host: ${{ steps.apply_output.outputs.stdout.dns_details.value.public_ip  }}
           remote_user: ${{ secrets.REMOTE_USER }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
