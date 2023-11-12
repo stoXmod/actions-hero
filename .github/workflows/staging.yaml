@@ -144,7 +144,7 @@ jobs:
           output=$(terraform output -json dns_details)
           echo "Terraform output: $output"
           public_ip=$(echo "$output" | jq -r '.public_ip')
-          echo "::set-output name=public_ip::$public_ip"
+          echo "PUBLIC_IP=$public_ip" >> $GITHUB_ENV
 
       # ======================================================
       # Checkout the PR branch so that we can deploy it
@@ -164,7 +164,7 @@ jobs:
           switches: -avzr --delete
           path: ./web
           remote_path: /var/app
-          remote_host: ${{ steps.apply_output.outputs.dns_details.public_ip }}
+          remote_host: ${{ env.PUBLIC_IP }}
           remote_user: ${{ secrets.REMOTE_USER }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
