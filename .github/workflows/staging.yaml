@@ -141,7 +141,8 @@ jobs:
         id: apply_output
         working-directory: infra/instances/staging/
         run: |
-          echo "::set-output name=dns_details::$(terraform output -json dns_details | jq -r '.')"
+          echo "Terraform output: $output"
+          echo "::set-output name=dns_details::$(echo "$output" | jq -r '.')"
 
       # ======================================================
       # Checkout the PR branch so that we can deploy it
