@@ -4,12 +4,6 @@ resource "google_compute_project_metadata" "ssh_keys" {
   }
 }
 
-resource "google_dns_managed_zone" "my_zone" {
-  name     = "pr-staging-zone"
-  dns_name = "wisdomdemo.com."
-  description = "Managed DNS zone for my domain"
-}
-
 resource "random_string" "random" {
   length  = 8
   special = false
