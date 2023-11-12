@@ -56,7 +56,6 @@ resource "google_compute_firewall" "allow_https" {
     protocol = "tcp"
     ports    = ["443"]
   }
-
   target_tags = ["staging-pr-demo"]
 }
 
@@ -72,6 +71,7 @@ resource "cloudflare_record" "my_instance_dns" {
   name    = "staging-pr-${random_string.random.result}"
   value   = google_compute_instance.staging_pr_demo.network_interface[0].access_config[0].nat_ip
   type    = "A"
+  proxied = true
   ttl     = 300
   depends_on = [
     google_compute_instance.staging_pr_demo,
