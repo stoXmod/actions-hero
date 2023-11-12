@@ -10,5 +10,5 @@ provider "random" {}
 
 # Cloudflare DNS
 provider "cloudflare" {
-    api_token = "<your_cloudflare_api_token>"
+    api_token = var.cloudflare_api_token
 }
