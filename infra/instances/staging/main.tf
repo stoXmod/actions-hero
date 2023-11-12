@@ -1,8 +1,13 @@
-
 resource "google_compute_project_metadata" "ssh_keys" {
   metadata = {
     "ssh-keys" = "stoxmod:${var.staging_public_key}"
   }
+}
+
+resource "google_dns_managed_zone" "my_zone" {
+  name     = "pr-staging-zone"
+  dns_name = "wisdomdemo.com."
+  description = "Managed DNS zone for my domain"
 }
 
 resource "random_string" "random" {
@@ -56,27 +61,16 @@ resource "google_compute_firewall" "allow_https" {
     protocol = "tcp"
     ports    = ["443"]
   }
+
   target_tags = ["staging-pr-demo"]
 }
 
-data "cloudflare_zones" "my_zone" {
-    filter {
-        name   = var.cloudflare_zone
-        status = "active"
-    }
-}
-
-resource "cloudflare_record" "my_instance_dns" {
-  zone_id = data.cloudflare_zones.my_zone.zones[0].id
-  name    = "staging-pr-${random_string.random.result}"
-  value   = google_compute_instance.staging_pr_demo.network_interface[0].access_config[0].nat_ip
-  type    = "A"
-  proxied = true
-  ttl     = 1
-  depends_on = [
-    google_compute_instance.staging_pr_demo,
-    random_string.random
-  ]
+resource "google_dns_record_set" "my_instance_dns" {
+  name         = "staging-pr-${random_string.random.result}.wisdomdemo.com."
+  type         = "A"
+  ttl          = 300
+  managed_zone = google_dns_managed_zone.my_zone.name
+  rrdatas = [google_compute_instance.staging_pr_demo.network_interface[0].access_config[0].nat_ip]
 }
 
 

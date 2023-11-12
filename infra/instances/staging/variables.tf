@@ -38,18 +38,3 @@ variable "dns_name" {
   description = "DNS name for the instance"
   type        = string
 }
-
-variable "cloudflare_api_token" {
-  description = "Cloudflare account API token"
-  type        = string
-}
-
-variable "cloudflare_account_id" {
-    description = "Cloudflare account ID"
-    type        = string
-}
-
-variable "cloudflare_zone" {
-    description = "Cloudflare zone"
-    type        = string
-}
