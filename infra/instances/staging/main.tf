@@ -1,3 +1,4 @@
+
 resource "google_compute_project_metadata" "ssh_keys" {
   metadata = {
     "ssh-keys" = "stoxmod:${var.staging_public_key}"
@@ -59,13 +60,14 @@ resource "google_compute_firewall" "allow_https" {
   target_tags = ["staging-pr-demo"]
 }
 
-resource "cloudflare_zone" "my_zone" {
-  zone = var.cloudflare_zone
-  account_id = var.cloudflare_account_id
+data "cloudflare_zones" "my_zones" {
+  filter {
+    name = var.cloudflare_zone
+  }
 }
 
 resource "cloudflare_record" "my_instance_dns" {
-  zone_id = cloudflare_zone.my_zone.id
+  zone_id = data.cloudflare_zones.my_zones.zones[0].id
   name    = "staging-pr-${random_string.random.result}"
   value   = google_compute_instance.staging_pr_demo.network_interface[0].access_config[0].nat_ip
   type    = "A"
