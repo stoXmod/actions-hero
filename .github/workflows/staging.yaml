@@ -141,6 +141,7 @@ jobs:
         id: apply_output
         working-directory: infra/instances/staging/
         run: |
+          output=$(terraform output -json dns_details)
           echo "Terraform output: $output"
           echo "::set-output name=dns_details::$(echo "$output" | jq -r '.')"
 
