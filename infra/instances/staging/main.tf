@@ -72,7 +72,7 @@ resource "cloudflare_record" "my_instance_dns" {
   value   = google_compute_instance.staging_pr_demo.network_interface[0].access_config[0].nat_ip
   type    = "A"
   proxied = true
-  ttl     = 300
+  ttl     = 1
   depends_on = [
     google_compute_instance.staging_pr_demo,
     random_string.random
