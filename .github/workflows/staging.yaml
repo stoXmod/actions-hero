@@ -140,7 +140,8 @@ jobs:
       - name: Terraform Output
         id: apply_output
         working-directory: infra/instances/staging/
-        run: terraform output -raw -no-color public_domain_name
+        run: |
+          echo "::set-output name=dns_details::$(terraform output -json dns_details | jq -r '.')"
 
       # ======================================================
       # Checkout the PR branch so that we can deploy it
@@ -160,7 +161,7 @@ jobs:
           switches: -avzr --delete
           path: ./web
           remote_path: /var/app
-          remote_host: ${{ steps.apply_output.outputs.stdout }}
+          remote_host: ${{ steps.apply_output.outputs.dns_details.public_ip }}
           remote_user: ${{ secrets.REMOTE_USER }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
@@ -192,7 +193,7 @@ jobs:
             const output = `#### Staging server created
             > PR #${{ github.event.inputs.PR_number }} has been deployed successfully
             
-            URL: http://${{ steps.apply_output.outputs.stdout }}`;
+            URL: https://${{ steps.apply_output.outputs.dns_details.domain_name }}`;
             
             github.rest.issues.createComment({
               issue_number: ${{ github.event.inputs.PR_number }},
