@@ -140,11 +140,7 @@ jobs:
       - name: Terraform Output
         id: apply_output
         working-directory: infra/instances/staging/
-        run: |
-          output=$(terraform output -json dns_details)
-          echo "Terraform output: $output"
-          public_ip=$(echo "$output" | jq -r '.public_ip')
-          echo "PUBLIC_IP=$public_ip" >> $GITHUB_ENV
+        run: terraform output -json
 
       # ======================================================
       # Checkout the PR branch so that we can deploy it
@@ -164,7 +160,7 @@ jobs:
           switches: -avzr --delete
           path: ./web
           remote_path: /var/app
-          remote_host: ${{ env.PUBLIC_IP }}
+          remote_host: ${{ steps.apply_output.outputs.stdout.public_ip  }}
           remote_user: ${{ secrets.REMOTE_USER }}
           remote_key: ${{ secrets.SSH_PRIVATE_KEY }}
 
