@@ -60,14 +60,12 @@ resource "google_compute_firewall" "allow_https" {
   target_tags = ["staging-pr-demo"]
 }
 
-data "cloudflare_zones" "my_zone" {
-  filter {
-    name = var.cloudflare_zone
-  }
+data "cloudflare_zone" "my_zone" {
+  name = var.cloudflare_zone
 }
 
 resource "cloudflare_record" "my_instance_dns" {
-  zone_id = data.cloudflare_zones.my_zone.zones[0].id
+  zone_id = data.cloudflare_zone.my_zone.id
   name    = "staging-pr-${random_string.random.result}"
   value   = google_compute_instance.staging_pr_demo.network_interface[0].access_config[0].nat_ip
   type    = "A"
