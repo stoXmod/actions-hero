@@ -53,8 +53,3 @@ variable "cloudflare_zone" {
     description = "Cloudflare zone"
     type        = string
 }
-
-variable "cloudflare_zone_id" {
-  description = "Cloudflare zone id"
-  type        = string
-}

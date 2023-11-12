@@ -62,7 +62,6 @@ resource "google_compute_firewall" "allow_https" {
 resource "cloudflare_zone" "my_zone" {
   zone = var.cloudflare_zone
   account_id = var.cloudflare_account_id
-  id = var.cloudflare_zone_id
 }
 
 resource "cloudflare_record" "my_instance_dns" {
