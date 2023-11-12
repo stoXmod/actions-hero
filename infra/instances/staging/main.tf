@@ -65,12 +65,22 @@ resource "google_compute_firewall" "allow_https" {
   target_tags = ["staging-pr-demo"]
 }
 
-resource "google_dns_record_set" "my_instance_dns" {
-  name         = "staging-pr-${random_string.random.result}.wisdomdemo.com."
-  type         = "A"
-  ttl          = 300
-  managed_zone = google_dns_managed_zone.my_zone.name
-  rrdatas = [google_compute_instance.staging_pr_demo.network_interface[0].access_config[0].nat_ip]
+resource "cloudflare_zone" "my_zone" {
+  zone = var.cloudflare_zone
+  account_id = var.cloudflare_account_id
+  id = var.cloudflare_zone_id
+}
+
+resource "cloudflare_record" "my_instance_dns" {
+  zone_id = cloudflare_zone.my_zone.id
+  name    = "staging-pr-${random_string.random.result}"
+  value   = google_compute_instance.staging_pr_demo.network_interface[0].access_config[0].nat_ip
+  type    = "A"
+  ttl     = 300
+  depends_on = [
+    google_compute_instance.staging_pr_demo,
+    random_string.random
+  ]
 }
 
 

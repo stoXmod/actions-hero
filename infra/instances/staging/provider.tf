@@ -7,3 +7,8 @@ provider "google" {
 
 # RANDOM PROVIDER
 provider "random" {}
+
+# Cloudflare DNS
+provider "cloudflare" {
+    api_token = "<your_cloudflare_api_token>"
+}
