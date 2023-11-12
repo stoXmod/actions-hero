@@ -61,7 +61,10 @@ resource "google_compute_firewall" "allow_https" {
 }
 
 data "cloudflare_zones" "my_zone" {
-  name = var.cloudflare_zone
+    filter {
+        name   = var.cloudflare_zone
+        status = "active"
+    }
 }
 
 resource "cloudflare_record" "my_instance_dns" {
